@@ -11,7 +11,7 @@ for (let i = 0; i < 10; i++) {
   btnNum.appendChild(btn);
 }
 
-var opt = ['+', '-', '*', '/', '='];
+var opt = ['+', '-', '*', '/', '=', 'clear'];
 for (let i = 0; i < opt.length; i++) {
   let btn = document.createElement('button');
   btn.innerHTML = opt[i];
@@ -20,6 +20,11 @@ for (let i = 0; i < opt.length; i++) {
     btn.onclick = function () {
       let hasil = eval(document.getElementById('hasil').value);
       document.getElementById('hasil').value = hasil;
+    }
+  } else if (i == 5) {
+    btn.className = 'btn btn-danger m-2';
+    btn.onclick = function () {
+      document.getElementById('hasil').value = '';
     }
   } else {
     btn.onclick = function () {
