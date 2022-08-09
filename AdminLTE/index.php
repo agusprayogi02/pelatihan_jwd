@@ -1,16 +1,20 @@
-<?php 
+<?php  
+$title = "JWD B";
 
-include 'heading.php';
+if (isset($_GET['page'])) {
+  $page = $_GET['page'];
+  $title = $page;
 
- ?>
+  include 'heading.php';
+  if($page !== ""){
+    include $page.'.php';
+  }else{
+    include 'dataBuku.php';  
+  }
+}else{
+  include 'dataBuku.php';
+}
 
-<div class="card p-4">
-	<h1>Selamat Datang, Agus Prayogi!</h1>
-</div>
-
-
- <?php 
 
 include 'footer.php';
-
-  ?>
+?>
