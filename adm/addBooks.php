@@ -1,4 +1,5 @@
-<?php include("header.php");
+<?php include("head.php");
+include("koneksi.php");
 if (isset($pesan)) {
 ?>
 
@@ -21,7 +22,7 @@ if (isset($pesan)) {
     </div>
     <!-- /.card-header -->
     <!-- form start -->
-    <form class="form-horizontal" action="addBooks_.php" method="POST">
+    <form class="form-horizontal" action="addBooks_.php" method="POST" enctype="multipart/form-data">
         <div class="card-body ">
 
             <!-- /.card -->
@@ -29,7 +30,7 @@ if (isset($pesan)) {
             <div class="form-group row">
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Kode Buku</label>
                 <div class="col-sm-10">
-                    <input name="tkode" type="text" class="form-control" id="inputEmail3" placeholder="Kode Buku ..." value="<?= uniqid() ?>" required>
+                    <input name="tkode" type="text" class="form-control" id="inputEmail3" placeholder="Kode Buku ..." required>
                 </div>
             </div>
             <div class="form-group row">
@@ -41,14 +42,17 @@ if (isset($pesan)) {
             <div class="form-group row">
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Kategori</label>
                 <div class="col-sm-10">
-
                     <select name="tkategori" class="form-control" required>
-                        <option value="">--Pilih Kategori --</option>
 
-                        <option value="1">Cerpen</option>
-                        <option value="2">Kimia</option>
-                        <option value="3">Ilmu Komputer</option>
-                        <option value="4">Agama</option>
+                        <option value="">--Pilih Kategori --</option>
+                        <?php
+                        $kategori = $db->query("select * from kategori");
+                        // $kate = mysqli_fetch_assoc($kategori);
+                        foreach ($kategori as $k) {
+                            echo '<option value="' . $k['id'] . '">' . $k['kategori'] . '</option>';
+                        }
+                        ?>
+
 
                     </select>
                 </div>
@@ -76,7 +80,7 @@ if (isset($pesan)) {
             <div class="form-group row">
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Gambar</label>
                 <div class="col-sm-10">
-                    <input name="tgbr" type="file" class="form-control" id="inputEmail3" accept="image/png, image/jpeg, image/gif" placeholder="Jumlah Buku ...">
+                    <input name="tgbr" type="file" class="form-control" id="inputEmail3" accept=".jpg,.png,.jpeg,.gif" placeholder="Jumlah Buku ..." required>
                 </div>
             </div>
 

@@ -8,7 +8,9 @@ if (isset($_POST['tkode'])) {
     $penerbit = $_POST['tpenerbit'];
     $pengarang = $_POST['tpengarang'];
     $jumlah = $_POST['tjumlah'];
-
+    $tmp = $_FILES['tgbr']['tmp_name'];
+    $namaFiles = $_FILES['tgbr']['name'];
+    $ext = substr(strrchr($namaFiles, '.'), 1);
 
     $checkKode = $db->query("select*from buku where kode='$kode'");
     $ada = mysqli_num_rows($checkKode);
@@ -16,8 +18,12 @@ if (isset($_POST['tkode'])) {
         $pesan = "Kode sudah ada";
         include("addBooks.php");
     } else {
-        $query = $db->query("insert into buku(kode,judul,kategori,penerbit,pengarang,jumlah) 
-         values('$kode','$judul','$kategori','$penerbit','$pengarang','$jumlah')") or die("Query gagal");
+
+        $nmFile = 'buku' . date("YmdHis") . '.' . $ext;
+        $query = $db->query("insert into buku(kode,judul,kategori,penerbit,pengarang,jumlah,nama_file,aktif) 
+         values('$kode','$judul','$kategori','$penerbit','$pengarang','$jumlah','$nmFile',1)") or die("Query gagal");
+
+        move_uploaded_file($tmp, 'gbr_buku/buku' . date("YmdHis") . '.' . $ext);
         header("location:index.php");
     }
 } else {
