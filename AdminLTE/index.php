@@ -12,9 +12,9 @@ if (isset($_GET['page'])) {
     include 'dataBuku.php';  
   }
 }else{
+  include 'heading.php';
   include 'dataBuku.php';
 }
 
 
 include 'footer.php';
-?>
