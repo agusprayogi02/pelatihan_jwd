@@ -1,22 +1,28 @@
 <?php
 session_start();
-include "koneksi.php";
+include "conn.php";
 
 $title = "Jual KOI";
 
-if (isset($_GET['page'])) {
-  $page = $_GET['page'];
-  $title = $page;
-  include 'heading.php';
+if (isset($_SESSION)) {
+    if ($_SESSION['level'] === 'admin') {
+        header("Location: admin/index.php");
+    }
+}
 
-  if ($page !== "") {
-    include $page . '.php';
-  } else {
-    include 'dataKoi.php';
-  }
+if (isset($_GET['page'])) {
+    $page = $_GET['page'];
+    $title = $page;
+    include 'heading.php';
+
+    if ($page !== "") {
+        include $page . '.php';
+    } else {
+        include 'dataKoi.php';
+    }
 } else {
-  include 'heading.php';
-  include 'dataKoi.php';
+    include 'heading.php';
+    include 'dataKoi.php';
 }
 
 include 'footer.php';

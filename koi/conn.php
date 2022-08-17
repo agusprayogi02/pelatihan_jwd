@@ -1,5 +1,5 @@
 <?php
-$db = mysqli_connect("localhost", "root", "admin123", "jwd_b") or die("Koneksi Server Gagal");
+$db = mysqli_connect("localhost", "root", "admin123", "jwd_b_koi") or die("Koneksi Server Gagal");
 
 function query($query)
 {
