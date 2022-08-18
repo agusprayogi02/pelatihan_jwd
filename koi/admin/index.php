@@ -3,6 +3,13 @@ session_start();
 include "../conn.php";
 
 $title = "Admin KOI";
+$bagian = "Home";
+$page = "Dashboard";
+
+if (isset($_POST['logOut'])) {
+    session_destroy();
+    header("Location: " . baseURL("index.php"));
+}
 
 if (!isset($_SESSION)) {
     header("Location: ../index.php");
