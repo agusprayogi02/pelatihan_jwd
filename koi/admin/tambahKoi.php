@@ -44,9 +44,9 @@ if (isset($_POST['save'])) {
       <div class="form-group row">
         <label for="kategori" class="col-sm-2 col-form-label">Kategori</label>
         <div class="col-sm-10">
-          <select name="kategori" id="kategori" class="form-control" required>
+          <select name="kategori" id="kategori" class="select2" style="width: 100%;" required>
 
-            <option value="">--Pilih Kategori --</option>
+            <option selected>--Pilih Kategori --</option>
             <?php
             $kategori = query("select * from category");
             // $kate = mysqli_fetch_assoc($kategori);
@@ -79,10 +79,11 @@ if (isset($_POST['save'])) {
           <input name="stok" type="number" class="form-control" id="stock" placeholder="Stok Ikan ..." required>
         </div>
       </div>
-      <div class="form-group row">
-        <label for="image" class="col-sm-2 col-form-label">Gambar</label>
-        <div class="col-sm-10">
-          <input name="image" type="file" class="form-control" id="image" accept=".jpg,.png,.jpeg,.gif" required>
+      <div class="form-group row ">
+        <label for="stock" class="col-sm-2 col-form-label">Gambar</label>
+        <div class="col-sm-10 custom-file">
+          <input name="image" type="file" class="custom-file-input" id="customFile" accept=".jpg,.png,.jpeg,.gif" required>
+          <label for="customFile" class="custom-file-label">Input Gambar...</label>
         </div>
       </div>
 

@@ -43,12 +43,7 @@
 <script src="<?= baseURL('plugins/summernote/summernote-bs4.min.js') ?>"></script>
 <!-- overlayScrollbars -->
 <script src="<?= baseURL('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') ?>"></script>
-<!-- AdminLTE App -->
-<script src="<?= baseURL('dist/js/adminlte.js') ?>"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="<?= baseURL('dist/js/demo.js') ?>"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="<?= baseURL('dist/js/pages/dashboard.js') ?>"></script>
+
 <!-- DataTables  & Plugins -->
 <script src="<?= baseURL('plugins/datatables/jquery.dataTables.min.js') ?>"></script>
 <script src="<?= baseURL('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>"></script>
@@ -64,11 +59,21 @@
 <script src="<?= baseURL('plugins/datatables-buttons/js/buttons.colVis.min.js') ?>"></script>
 
 <script src="<?= baseURL('plugins/select2/js/select2.full.min.js'); ?>"></script>
+
+<!-- bs-custom-file-input -->
+<script src="<?= baseURL('plugins/bs-custom-file-input/bs-custom-file-input.min.js'); ?>"></script>
+
+<!-- AdminLTE App -->
+<script src="<?= baseURL('dist/js/adminlte.js') ?>"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="<?= baseURL('dist/js/demo.js') ?>"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="<?= baseURL('dist/js/pages/dashboard.js') ?>"></script>
 <script>
-  $('.select2').select2();
-</script>
-<!-- Page specific script -->
-<script>
+  $(function() {
+    $('.select2').select2();
+    bsCustomFileInput.init();
+  });
   $(function() {
     $("#table_koi").DataTable({
       "responsive": true,
@@ -77,6 +82,7 @@
     }).buttons().container().appendTo('#table_koi_wrapper .col-md-6:eq(0)');
   });
 </script>
+<!-- Page specific script -->
 </body>
 
 </html>

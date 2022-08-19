@@ -18,8 +18,7 @@
     <link rel="stylesheet" href="<?= baseURL('plugins/icheck-bootstrap/icheck-bootstrap.min.css') ?>">
     <!-- JQVMap -->
     <link rel="stylesheet" href="<?= baseURL('plugins/jqvmap/jqvmap.min.css') ?>">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="<?= baseURL('dist/css/adminlte.min.css') ?>">
+
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="<?= baseURL('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') ?>">
     <!-- Daterange picker -->
@@ -31,6 +30,9 @@
     <link rel="stylesheet" href="<?= baseURL('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') ?>">
     <link rel="stylesheet" href="<?= baseURL('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') ?>">
     <link rel="stylesheet" href="<?= baseURL('plugins/select2/css/select2.min.css'); ?>">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="<?= baseURL('dist/css/adminlte.min.css') ?>">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
