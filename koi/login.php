@@ -18,7 +18,7 @@ if (isset($_POST['signIn'])) {
       $_SESSION['level'] = $user['level'];
       $_SESSION['email'] = $user['email'];
       $_SESSION['user'] = $user['full_name'];
-      $_SESSION['id'] = $user['id'];
+      $_SESSION['id'] = $user['uid'];
     } else {
       echo "<script>alert('Password salah!');</script>";
     }
@@ -58,7 +58,7 @@ if (isset($_SESSION)) {
     <!-- /.login-logo -->
     <div class="card card-outline card-primary">
       <div class="card-header text-center">
-        <a href="index.php" class="h1"><b class="text-primary">KOI</b>Gus</a>
+        <a href="<?= baseURL('index.php'); ?>" class="h1"><b class="text-primary">KOI</b>Gus</a>
       </div>
       <div class="card-body">
         <p class="login-box-msg">Sign in to start your session</p>
@@ -98,7 +98,7 @@ if (isset($_SESSION)) {
         </form>
 
         <p class="mb-0">
-          <a href="register.html" class="text-center">Register a new membership</a>
+          <a href="register.php" class="text-center">Register a new membership</a>
         </p>
       </div>
       <!-- /.card-body -->
