@@ -62,6 +62,11 @@
 <script src="<?= baseURL('plugins/datatables-buttons/js/buttons.html5.min.js') ?>"></script>
 <script src="<?= baseURL('plugins/datatables-buttons/js/buttons.print.min.js') ?>"></script>
 <script src="<?= baseURL('plugins/datatables-buttons/js/buttons.colVis.min.js') ?>"></script>
+
+<script src="<?= baseURL('plugins/select2/js/select2.full.min.js'); ?>"></script>
+<script>
+  $('.select2').select2();
+</script>
 <!-- Page specific script -->
 <script>
   $(function() {

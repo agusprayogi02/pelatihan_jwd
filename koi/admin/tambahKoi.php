@@ -23,7 +23,6 @@ if (isset($_POST['save'])) {
   }
 }
 
-
 ?>
 
 <div class="card card-light col-md-8 mx-auto p-0">
