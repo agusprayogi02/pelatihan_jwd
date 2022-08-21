@@ -90,46 +90,44 @@
         text: $(this).data('message')
       });
       location.replace("index.php");
-    <?php } else if (isset($delete)) {
-      if (isset($_GET['id'])) {
-        $id = $_GET['id'] / 22 / 22;
-      } else {
-        echo 'location.replace("index.php");';
-      }
-    ?>
-      var id = <?= $id; ?>;
+    <?php } ?>
+    $('.delete-koi').click(async (e) => {
+      var code = $('.delete-koi').data('koi');
+      var data = atob(code).split('?=?');
       var {
         isConfirmed
       } = await Alert.fire({
-        title: '<?= $delete ?>',
+        title: 'Anda yakin ingin menghapus data ikan ' + data[1] + ' ?',
+        icon: 'warning',
         text: $(this).data('message')
       });
       if (isConfirmed) {
         $.ajax({
-          url: "delete.php",
+          url: "<?= baseURL('admin/delete.php'); ?>",
           type: "POST",
           data: {
-            id: id
+            code: code,
+            delete: true,
           },
-          success: async (data) => {
+          success: async (rest) => {
             await Toast.fire({
               icon: 'success',
-              title: '<?= $success ?>',
+              title: rest,
               text: $(this).data('message')
             });
             location.replace("index.php");
           },
-          error: async (data) => {
+          error: async (err) => {
             await Toast.fire({
               icon: 'error',
-              title: '<?= $error ?>',
+              title: err,
               text: $(this).data('message')
             });
             location.replace("index.php");
           }
         });
       }
-    <?php } ?>
+    });
   })
 </script>
 

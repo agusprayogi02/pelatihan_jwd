@@ -24,7 +24,7 @@
             </thead>
             <tbody>
                 <?php
-                $queryText = "SELECT c.name as kategori, fish.name as fish_name, fish.id, fish.stock, fish.price, fish.size FROM fish inner join category as c on fish.category_id = c.id WHERE fish.uid = " . $_SESSION['id'];
+                $queryText = "SELECT c.name as kategori, fish.name as fish_name, fish.id, fish.stock, fish.price, fish.size FROM fish inner join category as c on fish.category_id = c.id WHERE fish.uid = " . $_SESSION['id'] . " AND isDelete = 0";
                 $query = query($queryText);
                 $no = 0;
                 foreach ($query as $q) :
@@ -32,17 +32,17 @@
 
                 ?>
                     <tr>
-                        <td><?php echo $no ?></td>
+                        <td><?= $no ?></td>
                         <td class="text-center">
-                            <a href="index.php?page=updateKoi&id=<?php echo $q['id'] * 22 * 22 * 103 ?>" class="btn btn-outline-warning btn-xs mr-2"><i class="fa fa-edit"></i> Ubah</a>
-                            <a href="index.php?page=delete&id=<?php echo $q['id'] * 22 * 22 ?>" class="btn btn-outline-danger btn-xs"><i class="fa fa-trash"> Hapus</i>
-                            </a>
+                            <a href="index.php?page=updateKoi&id=<?= $q['id'] * 22 * 22 * 103 ?>" class="btn btn-outline-warning btn-xs mr-2"><i class="fa fa-edit"></i> Ubah</a>
+                            <button data-koi="<?= base64_encode($q['id'] . '?=?' . $q['fish_name']); ?>" class="btn btn-outline-danger btn-xs delete-koi"><i class="fa fa-trash"> Hapus</i>
+                            </button>
                         </td>
-                        <td><?php echo $q['fish_name'] ?></td>
-                        <td><?php echo $q['price'] ?></td>
-                        <td><?php echo $q['size'] ?></td>
-                        <td><?php echo $q['kategori'] ?></td>
-                        <td><?php echo $q['stock'] ?></td>
+                        <td><?= $q['fish_name'] ?></td>
+                        <td><?= $q['price'] ?></td>
+                        <td><?= $q['size'] ?></td>
+                        <td><?= $q['kategori'] ?></td>
+                        <td><?= $q['stock'] ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
