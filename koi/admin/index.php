@@ -1,27 +1,22 @@
 <?php
-session_start();
 include "../conn.php";
 
 $title = "Admin KOI";
 $bagian = "Home";
 $page = "Dashboard";
 
-if (isset($_POST['logOut'])) {
-    session_destroy();
-    header("Location: " . baseURL("index.php"));
-}
-
-if (!isset($_SESSION)) {
-    header("Location: ../index.php");
-} else {
-    if ($_SESSION['level'] !== 'admin') {
-        header("Location: ../index.php");
+if (isset($_SESSION['level'])) {
+    if ($_SESSION['level'] === 'user') {
+        header("Location: " . baseURL("index.php"));
     }
+} else {
+    header("Location: " . baseURL("login.php"));
 }
 
 if (isset($_GET['page'])) {
     $page = $_GET['page'];
     $title = $page;
+    $pageName = $page;
     include '../heading.php';
 
     if ($page !== "") {

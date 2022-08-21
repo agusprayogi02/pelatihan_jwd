@@ -1,3 +1,64 @@
+<?php
+session_start();
+
+if (isset($_POST['logOut'])) {
+    session_destroy();
+    header("Location: index.php");
+}
+
+$pages = array(
+    array(
+        'url' => 'index.php?page=',
+        'bagian' => 'Home',
+        'title' => "Data Koi",
+        'pages' => array(
+            array(
+                'title' => 'Dashboard',
+                'page' => 'dataKoi'
+            ),
+
+        ),
+    ),
+    array(
+        'url' => 'index.php?page=',
+        'bagian' => 'Transaksi',
+        'title' => 'Transaksi',
+        'pages' => array(
+            array(
+                'title' => 'Keranjang',
+                'page' => 'pembelian'
+            ),
+            array(
+                'title' => 'Histori Pembelian',
+                'page' => 'history'
+            ),
+        ),
+    ),
+);
+
+if (isset($_SESSION['level'])) {
+    if ($_SESSION['level'] === 'admin') {
+        $pages = array(
+            array(
+                'url' => 'admin/index.php?page=',
+                'bagian' => 'Home',
+                'title' => "Data Koi",
+                'pages' => array(
+                    array(
+                        'title' => 'Dashboard',
+                        'page' => 'dataKoi'
+                    ),
+                    array(
+                        'title' => 'Tambah Data Koi',
+                        'page' => 'tambahKoi'
+                    ),
+                ),
+            ),
+        );
+    }
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -122,67 +183,29 @@
                         <!-- Add icons to the links using the .nav-icon class
                    with font-awesome or any other icon font library -->
                         <?php
-                        if (isset($_SESSION['level'])) :
-                            if ($_SESSION['level'] === "admin") :
+                        foreach ($pages as $pg) :
                         ?>
-                                <li class="nav-item menu-open">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon fas fa-fish"></i>
-                                        <p>
-                                            Data Koi
-                                            <i class="right fas fa-angle-left"></i>
-                                        </p>
-                                    </a>
-
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item">
-                                            <a href="<?= baseURL('admin/index.php?page=dataKoi'); ?>" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Data Koi</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="<?= baseURL('admin/index.php?page=tambahKoi'); ?>" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Tambah Koi</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            <?php endif;
-                        else : ?>
-                            <li class="nav-item">
-                                <a href="index.php" class="nav-link">
+                            <li class="nav-item <?= $bagian == $pg['bagian'] ? 'menu-open' : ''; ?>">
+                                <a href="#" class="nav-link <?= $bagian == $pg['bagian'] ? 'menu-open active' : ''; ?>">
                                     <i class="nav-icon fas fa-fish"></i>
                                     <p>
-                                        Data Koi
+                                        <?= $pg['title']; ?>
+                                        <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
+
+                                <ul class="nav nav-treeview">
+                                    <?php foreach ($pg['pages'] as $p) : ?>
+                                        <li class="nav-item">
+                                            <a href="<?= baseURL($pg['url'] . $p['page']); ?>" class="nav-link <?= $pageName == $p['page'] ? 'active' : ''; ?>">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p><?= $p['title']; ?></p>
+                                            </a>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
                             </li>
-                        <?php endif; ?>
-                        <li class="nav-item menu-open">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-chart-bar"></i>
-                                <p>
-                                    Transaksi
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="./index.php?page=pembelian" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Pembelian</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="./index.php?page=history" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Histori</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                        <?php endforeach; ?>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->

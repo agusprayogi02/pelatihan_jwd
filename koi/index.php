@@ -1,5 +1,4 @@
 <?php
-session_start();
 include "conn.php";
 
 $title = "Jual KOI";
@@ -9,31 +8,26 @@ $page = "Dashboard";
 
 if (isset($_SESSION['level'])) {
     if ($_SESSION['level'] === 'admin') {
-        header("Location: admin/index.php");
+        header("Location: " . baseURL("admin/index.php"));
     }
-}
-
-if (isset($_POST['logOut'])) {
-    session_destroy();
-    session_reset();
-    header("Location: " . baseURL("index.php"));
 }
 
 if (isset($_GET['page'])) {
     $page = $_GET['page'];
+    $pageName = $page;
 
-    if ($page !== "") {
-        if ($page === "pembelian") {
+    if ($pageName !== "") {
+        if ($pageName === "pembelian") {
             $title = "Pembelian Koi";
             $bagian = "Transaksi";
             $page = "Pembelian";
-        } else if ($page === "history") {
+        } else if ($pageName === "history") {
             $bagian = "Transaksi";
             $title = "Histori Pembelian";
             $page = "Histori";
         }
         include 'heading.php';
-        include $page . '.php';
+        include $pageName . '.php';
     } else {
         include 'dataKoi.php';
     }
