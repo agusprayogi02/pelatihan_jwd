@@ -1,28 +1,29 @@
 <?php
-session_start();
 
 if (isset($_POST['logOut'])) {
     session_destroy();
-    header("Location: index.php");
+    header("Location: " . baseURL('index.php'));
 }
 
+$url = baseURL('index.php?page=');
 $pages = array(
     array(
         'url' => 'index.php?page=',
         'bagian' => 'Home',
         'title' => "Data Koi",
+        'icon' => 'fas fa-fish',
         'pages' => array(
             array(
                 'title' => 'Dashboard',
                 'page' => 'dataKoi'
             ),
-
         ),
     ),
     array(
         'url' => 'index.php?page=',
         'bagian' => 'Transaksi',
         'title' => 'Transaksi',
+        'icon' => 'fas fa-chart-bar',
         'pages' => array(
             array(
                 'title' => 'Keranjang',
@@ -38,11 +39,12 @@ $pages = array(
 
 if (isset($_SESSION['level'])) {
     if ($_SESSION['level'] === 'admin') {
+        $url = baseURL('admin/index.php?page=');
         $pages = array(
             array(
-                'url' => 'admin/index.php?page=',
                 'bagian' => 'Home',
-                'title' => "Data Koi",
+                'title' => "Koi",
+                'icon' => 'fas fa-fish',
                 'pages' => array(
                     array(
                         'title' => 'Dashboard',
@@ -51,6 +53,32 @@ if (isset($_SESSION['level'])) {
                     array(
                         'title' => 'Tambah Data Koi',
                         'page' => 'tambahKoi'
+                    ),
+                ),
+            ),
+            array(
+                'bagian' => 'Transaksi',
+                'title' => 'Transaksi',
+                'icon' => 'fas fa-chart-bar',
+                'pages' => array(
+                    array(
+                        'title' => 'Pesanan', // digunakan untuk status 2
+                        'page' => 'pesanan'
+                    ),
+                    array(
+                        'title' => 'Histori Pesanan', // digunakan untuk status 3
+                        'page' => 'history'
+                    ),
+                ),
+            ),
+            array(
+                'bagian' => 'Users',
+                'title' => 'Users',
+                'icon' => 'fas fa-users',
+                'pages' => array(
+                    array(
+                        'title' => 'Data Users',
+                        'page' => 'user'
                     ),
                 ),
             ),
@@ -187,7 +215,7 @@ if (isset($_SESSION['level'])) {
                         ?>
                             <li class="nav-item <?= $bagian == $pg['bagian'] ? 'menu-open' : ''; ?>">
                                 <a href="#" class="nav-link <?= $bagian == $pg['bagian'] ? 'menu-open active' : ''; ?>">
-                                    <i class="nav-icon fas fa-fish"></i>
+                                    <i class="nav-icon <?= $pg['icon']; ?>"></i>
                                     <p>
                                         <?= $pg['title']; ?>
                                         <i class="right fas fa-angle-left"></i>
@@ -197,7 +225,7 @@ if (isset($_SESSION['level'])) {
                                 <ul class="nav nav-treeview">
                                     <?php foreach ($pg['pages'] as $p) : ?>
                                         <li class="nav-item">
-                                            <a href="<?= baseURL($pg['url'] . $p['page']); ?>" class="nav-link <?= $pageName == $p['page'] ? 'active' : ''; ?>">
+                                            <a href="<?= $url . $p['page']; ?>" class="nav-link <?= $pageName == $p['page'] ? 'active' : ''; ?>">
                                                 <i class="far fa-circle nav-icon"></i>
                                                 <p><?= $p['title']; ?></p>
                                             </a>

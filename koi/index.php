@@ -1,9 +1,11 @@
 <?php
+session_start();
 include "conn.php";
 
 $title = "Jual KOI";
 $bagian = "Home";
 $page = "Dashboard";
+$pageName = "Dashboard";
 
 
 if (isset($_SESSION['level'])) {

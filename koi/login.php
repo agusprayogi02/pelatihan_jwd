@@ -19,16 +19,25 @@ if (isset($_POST['signIn'])) {
     $error = "Email tidak terdaftar!";
   } else {
     $user = $result[0];
-    $checkPW = password_verify($password, $user['password']);
-
-    if ($checkPW) {
-      $_SESSION['level'] = $user['level'];
-      $_SESSION['email'] = $email;
-      $_SESSION['user'] = $user['full_name'];
-      $_SESSION['id'] = $user['uid'];
-      $success = "Berhasil masuk dengan email $email!";
+    if ($user['status'] == 0) {
+      $error = "Akun anda diblokir oleh admin!";
     } else {
-      $error = "Password anda salah!";
+      $checkPW = password_verify($password, $user['password']);
+
+      if ($checkPW) {
+        $_SESSION['level'] = $user['level'];
+        if ($_SESSION['level'] === 'admin') {
+          $url = baseURL('admin/index.php');
+        } else if ($_SESSION['level'] === 'user') {
+          $url = baseURL('index.php');
+        }
+        $_SESSION['email'] = $email;
+        $_SESSION['user'] = $user['full_name'];
+        $_SESSION['id'] = $user['uid'];
+        $success = "Berhasil masuk dengan email $email!";
+      } else {
+        $error = "Password anda salah!";
+      }
     }
   }
 }
@@ -134,7 +143,7 @@ if (isset($_POST['signIn'])) {
           title: '<?= $success ?>',
           text: $(this).data('message')
         });
-        location.replace("index.php");
+        location.replace('<?= $url ?>');
       <?php } ?>
     });
   </script>

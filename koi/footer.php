@@ -62,7 +62,8 @@
 
 <!-- bs-custom-file-input -->
 <script src="<?= baseURL('plugins/bs-custom-file-input/bs-custom-file-input.min.js'); ?>"></script>
-<script src="<?= baseURL("plugins/sweetalert2/sweetalert2.min.js"); ?>"></script>
+<script src="<?= baseURL('plugins/sweetalert2/sweetalert2.min.js'); ?>"></script>
+
 <script>
   $(async () => {
     var Toast = Swal.mixin({
@@ -89,8 +90,99 @@
         title: '<?= $success ?>',
         text: $(this).data('message')
       });
-      location.replace("index.php");
+      location.replace('<?= $url ?>');
     <?php } ?>
+    $('.block-user').click(async () => {
+      var code = $('.block-user').data('code');
+      var data = atob(code).split('?=?');
+      var {
+        isConfirmed
+      } = await Alert.fire({
+        title: 'Anda yakin ingin memblokir user ' + data[1] + ' ini?',
+        icon: 'warning',
+        text: $(this).data('message')
+      });
+      if (isConfirmed) {
+        $.ajax({
+          url: "<?= baseURL('api.php?func=blokirUser'); ?>",
+          type: "POST",
+          data: {
+            code: code,
+            blokir: true,
+          },
+          success: async (rest) => {
+            rest = $.parseJSON(rest);
+            if (rest[0]) {
+              await Toast.fire({
+                icon: 'success',
+                title: rest[1],
+                text: $(this).data('message')
+              });
+              location.reload();
+            } else {
+              Toast.fire({
+                icon: 'error',
+                title: rest[1],
+                text: $(this).data('message')
+              });
+            }
+          },
+          error: async (err) => {
+            Toast.fire({
+              icon: 'error',
+              title: err,
+              text: $(this).data('message')
+            });
+          }
+        });
+      }
+    });
+    $('.active-user').click(async () => {
+      var code = $('.active-user').data('code');
+      var data = atob(code).split('?=?');
+      var {
+        isConfirmed
+      } = await Alert.fire({
+        title: 'Anda yakin ingin mengaktifkan user ' + data[1] + ' ini?',
+        icon: 'warning',
+        text: $(this).data('message')
+      });
+      if (isConfirmed) {
+        $.ajax({
+          url: "<?= baseURL('api.php?func=activeUser'); ?>",
+          type: "POST",
+          data: {
+            code: code,
+            active: true,
+          },
+          success: async (rest) => {
+            rest = $.parseJSON(rest);
+            console.log(rest);
+            if (rest[0]) {
+              await Toast.fire({
+                icon: 'success',
+                title: rest[1],
+                text: $(this).data('message')
+              });
+              location.reload();
+            } else {
+              Toast.fire({
+                icon: 'error',
+                title: rest[1],
+                text: $(this).data('message')
+              });
+            }
+          },
+          error: async (err) => {
+            Toast.fire({
+              icon: 'error',
+              title: err,
+              text: $(this).data('message')
+            });
+          }
+        });
+      }
+    });
     $('.delete-koi').click(async (e) => {
       var code = $('.delete-koi').data('koi');
       var data = atob(code).split('?=?');
@@ -103,19 +195,28 @@
       });
       if (isConfirmed) {
         $.ajax({
-          url: "<?= baseURL('admin/delete.php'); ?>",
+          url: "<?= baseURL('api.php?func=delete'); ?>",
           type: "POST",
           data: {
             code: code,
             delete: true,
           },
           success: async (rest) => {
-            await Toast.fire({
-              icon: 'success',
-              title: rest,
-              text: $(this).data('message')
-            });
-            location.replace("index.php");
+            rest = $.parseJSON(rest);
+            if (rest[0]) {
+              await Toast.fire({
+                icon: 'success',
+                title: rest[1],
+                text: $(this).data('message')
+              });
+              location.reload();
+            } else {
+              Toast.fire({
+                icon: 'error',
+                title: rest[1],
+                text: $(this).data('message')
+              });
+            }
           },
           error: async (err) => {
             await Toast.fire({
@@ -123,12 +224,11 @@
               title: err,
               text: $(this).data('message')
             });
-            location.replace("index.php");
           }
         });
       }
     });
-  })
+  });
 </script>
 
 <!-- AdminLTE App -->
