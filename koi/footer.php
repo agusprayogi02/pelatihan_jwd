@@ -62,6 +62,76 @@
 
 <!-- bs-custom-file-input -->
 <script src="<?= baseURL('plugins/bs-custom-file-input/bs-custom-file-input.min.js'); ?>"></script>
+<script src="<?= baseURL("plugins/sweetalert2/sweetalert2.min.js"); ?>"></script>
+<script>
+  $(async () => {
+    var Toast = Swal.mixin({
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true
+    });
+    var Alert = Swal.mixin({
+      confirmButtonClass: 'btn btn-primary mr-5',
+      cancelButtonClass: 'btn btn-danger',
+      showCancelButton: true,
+      showConfirmButton: true,
+      buttonsStyling: false,
+    });
+    <?php if (isset($error)) { ?>
+      Toast.fire({
+        icon: 'error',
+        title: '<?= $error ?>',
+        text: $(this).data('message')
+      });
+    <?php } else if (isset($success)) { ?>
+      await Toast.fire({
+        icon: 'success',
+        title: '<?= $success ?>',
+        text: $(this).data('message')
+      });
+      location.replace("index.php");
+    <?php } else if (isset($delete)) {
+      if (isset($_GET['id'])) {
+        $id = $_GET['id'] / 22 / 22;
+      } else {
+        echo 'location.replace("index.php");';
+      }
+    ?>
+      var id = <?= $id; ?>;
+      var {
+        isConfirmed
+      } = await Alert.fire({
+        title: '<?= $delete ?>',
+        text: $(this).data('message')
+      });
+      if (isConfirmed) {
+        $.ajax({
+          url: "delete.php",
+          type: "POST",
+          data: {
+            id: id
+          },
+          success: async (data) => {
+            await Toast.fire({
+              icon: 'success',
+              title: '<?= $success ?>',
+              text: $(this).data('message')
+            });
+            location.replace("index.php");
+          },
+          error: async (data) => {
+            await Toast.fire({
+              icon: 'error',
+              title: '<?= $error ?>',
+              text: $(this).data('message')
+            });
+            location.replace("index.php");
+          }
+        });
+      }
+    <?php } ?>
+  })
+</script>
 
 <!-- AdminLTE App -->
 <script src="<?= baseURL('dist/js/adminlte.js') ?>"></script>

@@ -1,10 +1,12 @@
 <div class="card">
-    <div class="card-header row">
-        <p class="col h4">Data Koi</p>
-        <div class="col text-right">
-            <a href="index.php?page=tambahKoi" class="btn btn-flat btn-sm btn-outline-success">
-                <i class="fas fa-plus"></i> Tambah Data
-            </a>
+    <div class="card-header">
+        <div class="row">
+            <p class="col h4">Data Koi</p>
+            <div class="col text-right">
+                <a href="index.php?page=tambahKoi" class="btn btn-flat btn-sm btn-outline-success">
+                    <i class="fas fa-plus"></i> Tambah Data
+                </a>
+            </div>
         </div>
     </div>
     <div class="card-body">
@@ -12,7 +14,7 @@
             <thead>
                 <tr>
                     <th style="width: 10px;">No</th>
-                    <th style="width: 10px;">Edit</th>
+                    <th>Action</th>
                     <th>Nama Ikan</th>
                     <th>Harga</th>
                     <th>Ukuran</th>
@@ -22,7 +24,7 @@
             </thead>
             <tbody>
                 <?php
-                $queryText = "SELECT c.name as kategori, fish.name as fish_name, fish.id, fish.stock, fish.price, fish.size FROM fish inner join category as c on fish.category_id = c.id";
+                $queryText = "SELECT c.name as kategori, fish.name as fish_name, fish.id, fish.stock, fish.price, fish.size FROM fish inner join category as c on fish.category_id = c.id WHERE fish.uid = " . $_SESSION['id'];
                 $query = query($queryText);
                 $no = 0;
                 foreach ($query as $q) :
@@ -32,8 +34,9 @@
                     <tr>
                         <td><?php echo $no ?></td>
                         <td class="text-center">
-                            <a href="index.php?page=updateKoi&id=<?php echo $q['id'] * 22 * 22 ?>" <button class="btn btn-outline-warning btn-flat btn-xs"><i class="fa fa-edit"></i></button>
-
+                            <a href="index.php?page=updateKoi&id=<?php echo $q['id'] * 22 * 22 * 103 ?>" class="btn btn-outline-warning btn-xs mr-2"><i class="fa fa-edit"></i> Ubah</a>
+                            <a href="index.php?page=delete&id=<?php echo $q['id'] * 22 * 22 ?>" class="btn btn-outline-danger btn-xs"><i class="fa fa-trash"> Hapus</i>
+                            </a>
                         </td>
                         <td><?php echo $q['fish_name'] ?></td>
                         <td><?php echo $q['price'] ?></td>

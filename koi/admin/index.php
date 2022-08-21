@@ -13,7 +13,7 @@ if (isset($_POST['logOut'])) {
 
 if (!isset($_SESSION)) {
     header("Location: ../index.php");
-}else{
+} else {
     if ($_SESSION['level'] !== 'admin') {
         header("Location: ../index.php");
     }
@@ -25,7 +25,12 @@ if (isset($_GET['page'])) {
     include '../heading.php';
 
     if ($page !== "") {
-        include $page . '.php';
+        if ($page === "delete") {
+            $delete = "Apakah anda yakin bro, mau menghapus data ini??";
+            include 'dataKoi.php';
+        } else {
+            include $page . '.php';
+        }
     } else {
         include 'dataKoi.php';
     }
@@ -35,4 +40,3 @@ if (isset($_GET['page'])) {
 }
 
 include '../footer.php';
-

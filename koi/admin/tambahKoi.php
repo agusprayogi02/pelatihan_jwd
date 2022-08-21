@@ -11,15 +11,14 @@ if (isset($_POST['save'])) {
   $namaFiles = $_FILES['image']['name'];
   $ext = substr(strrchr($namaFiles, '.'), 1);
 
-  $nmFile = 'buku' . time() . '.' . $ext;
+  $nmFile = 'KOI' . time() . '.' . $ext;
   $query = "INSERT INTO fish (name, category_id, price, size, stock, image, uid) VALUES ('$name', '$kategori', '$harga', '$ukuran', '$stok', '$nmFile', '$uid')";
   $upp = mysqli_query($db, $query) or die("Query gagal");
   if ($upp) {
-    move_uploaded_file($tmp, 'image/' . $nmFile);
-    header("Location: index.php?page=dataKoi");
-    echo "<script>alert('Data berhasil ditambahkan!');</script>";
+    move_uploaded_file($tmp, '../image/' . $nmFile) or die("gagal upload!!");
+    $success =  'Berhasil Menambahkan Data Ikan $name!!';
   } else {
-    echo "<script>alert('Data gagal ditambahkan!');</script>";
+    $error =  'Gagal Menambahkan Data!!';
   }
 }
 
@@ -91,7 +90,8 @@ if (isset($_POST['save'])) {
     <!-- /.card-body -->
     <div class="card-footer">
       <button type="submit" name="save" class="btn btn-success btn-sm"><i class="fa fa-save"></i> Simpan Data Koi</button>
-      <button type="reset" class="btn btn-default float-right">Batal</button>
+      <button type="reset" class="btn btn-danger btn-sm float-right ml-2">Reset</button>
+      <a href="index.php" class="btn btn-default btn-sm float-right">Batal</a>
     </div>
     <!-- /.card-footer -->
   </form>
