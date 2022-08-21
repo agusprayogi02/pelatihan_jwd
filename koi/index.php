@@ -7,7 +7,7 @@ $bagian = "Home";
 $page = "Dashboard";
 
 
-if (isset($_SESSION)) {
+if (isset($_SESSION['level'])) {
     if ($_SESSION['level'] === 'admin') {
         header("Location: admin/index.php");
     }
@@ -15,6 +15,7 @@ if (isset($_SESSION)) {
 
 if (isset($_POST['logOut'])) {
     session_destroy();
+    session_reset();
     header("Location: " . baseURL("index.php"));
 }
 

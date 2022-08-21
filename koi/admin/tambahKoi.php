@@ -16,9 +16,9 @@ if (isset($_POST['save'])) {
   $upp = mysqli_query($db, $query) or die("Query gagal");
   if ($upp) {
     move_uploaded_file($tmp, '../image/' . $nmFile) or die("gagal upload!!");
-    $success =  'Berhasil Menambahkan Data Ikan $name!!';
+    $success = "Berhasil Menambahkan Data Ikan $name!!";
   } else {
-    $error =  'Gagal Menambahkan Data!!';
+    $error = "Gagal Menambahkan Data!!";
   }
 }
 

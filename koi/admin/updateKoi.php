@@ -109,7 +109,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
           </div>
         </div>
         <div class="col-md-4 text-center">
-          <img src="<?= baseURL('image/' . $data['image']); ?>" alt="Gambar tidak ditemukan" width="90%">
+          <img src="<?= baseURL('image/' . $data['image']); ?>" alt="Gambar tidak ditemukan" width="90%" class="img-rounded">
 
         </div>
       </div>

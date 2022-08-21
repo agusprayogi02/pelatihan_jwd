@@ -2,6 +2,13 @@
 session_start();
 include "conn.php";
 
+if (isset($_SESSION['level'])) {
+  if ($_SESSION['level'] === 'admin') {
+    header("Location: admin/index.php");
+  } else if ($_SESSION['level'] === 'user') {
+    header("Location: index.php");
+  }
+}
 
 if (isset($_POST['signIn'])) {
   $email = $_POST['email'];
@@ -9,27 +16,20 @@ if (isset($_POST['signIn'])) {
   $query = "SELECT * FROM user WHERE email = '$email'";
   $result = query($query);
   if (count($result) < 0) {
-    echo "<script>alert('Email tidak terdaftar!');</script>";
+    $error = "Email tidak terdaftar!";
   } else {
     $user = $result[0];
     $checkPW = password_verify($password, $user['password']);
 
     if ($checkPW) {
       $_SESSION['level'] = $user['level'];
-      $_SESSION['email'] = $user['email'];
+      $_SESSION['email'] = $email;
       $_SESSION['user'] = $user['full_name'];
       $_SESSION['id'] = $user['uid'];
+      $success = "Berhasil masuk dengan email $email!";
     } else {
-      echo "<script>alert('Password salah!');</script>";
+      $error = "Password anda salah!";
     }
-  }
-}
-
-if (isset($_SESSION)) {
-  if ($_SESSION['level'] === 'admin') {
-    header("Location: admin/index.php");
-  } else if ($_SESSION['level'] === 'user') {
-    header("Location: index.php");
   }
 }
 
@@ -49,6 +49,7 @@ if (isset($_SESSION)) {
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- icheck bootstrap -->
   <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <link rel="stylesheet" href="<?= baseURL('plugins/sweetalert2/sweetalert2.min.css'); ?>">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
@@ -113,6 +114,30 @@ if (isset($_SESSION)) {
   <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- AdminLTE App -->
   <script src="dist/js/adminlte.min.js"></script>
+  <script src="<?= baseURL("plugins/sweetalert2/sweetalert2.min.js"); ?>"></script>
+  <script>
+    $(async () => {
+      var Toast = Swal.mixin({
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true
+      });
+      <?php if (isset($error)) { ?>
+        Toast.fire({
+          icon: 'error',
+          title: '<?= $error ?>',
+          text: $(this).data('message')
+        });
+      <?php } else if (isset($success)) { ?>
+        await Toast.fire({
+          icon: 'success',
+          title: '<?= $success ?>',
+          text: $(this).data('message')
+        });
+        location.replace("index.php");
+      <?php } ?>
+    });
+  </script>
 </body>
 
 </html>
