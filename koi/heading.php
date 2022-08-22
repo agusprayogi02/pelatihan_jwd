@@ -153,6 +153,30 @@ if (isset($_SESSION['level'])) {
                         <i class="fas fa-expand-arrows-alt"></i>
                     </a>
                 </li>
+                <?php if (isset($_SESSION['level'])) : ?>
+                    <!-- Notifications Dropdown Menu -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" data-toggle="dropdown" href="#">
+                            <i class="fas fa-shopping-cart"></i>
+                            <?php
+                            if (isset($_SESSION['keranjang'])) {
+                                $jumlah = $_SESSION['keranjang'];
+                                echo "<span class='badge badge-danger navbar-badge'>$jumlah</span>";
+                            }
+                            ?>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                            <span class="dropdown-item dropdown-header">Keranjang</span>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-fish mr-2"></i> Ikan Koi
+                                <span class="float-right text-muted text-sm">7</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="index.php?page=keranjang" class="dropdown-item dropdown-footer">Lihat semua isi Keranjang</a>
+                        </div>
+                    </li>
+                <?php endif; ?>
 
 
                 <li class="nav-item dropdown">

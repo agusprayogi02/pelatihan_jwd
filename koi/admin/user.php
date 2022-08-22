@@ -28,9 +28,9 @@
           <tr>
             <td><?= $no ?></td>
             <td class="text-center">
-              <button data-code="<?= base64_encode($q['uid'] . '?=?' . $q['full_name']); ?>" class="btn btn-outline-success btn-xs active-user"><i class="fa fa-user-plus"> Active</i>
+              <button data-code="<?= base64_encode($q['uid'] . '?=?' . $q['full_name'] . '?=?1'); ?>" class="btn btn-outline-success btn-xs modify-user"><i class="fa fa-user-plus"> Active</i>
               </button> |
-              <button data-code="<?= base64_encode($q['uid'] . '?=?' . $q['full_name']); ?>" class="btn btn-outline-danger btn-xs block-user"><i class="fa fa-user-minus"> Blokir</i>
+              <button data-code="<?= base64_encode($q['uid'] . '?=?' . $q['full_name'] . '?=?0'); ?>" class="btn btn-outline-danger btn-xs modify-user"><i class="fa fa-user-minus"> Blokir</i>
               </button>
             </td>
             <td><?= $q['full_name'] ?></td>

@@ -36,7 +36,7 @@ $data = query("SELECT * FROM fish");
                             <li class="nav-link">Size <span class="float-right badge bg-primary"><?= $item['size'] ?></span></li>
                         </ul>
 
-                        <a href="" class="btn btn-outline-primary w-100">Beli</a>
+                        <button data-code="<?= base64_encode($item['id'] . '?=?' . $item['name']); ?>" class="btn btn-outline-primary font-weight-bold w-100 beli-bro">Beli</button>
                     </div>
                 </div>
             </div>

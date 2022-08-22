@@ -92,23 +92,24 @@
       });
       location.replace('<?= $url ?>');
     <?php } ?>
-    $('.block-user').click(async () => {
-      var code = $('.block-user').data('code');
+
+    $('.beli-bro').click(async () => {
+      var code = $('.beli-bro').data('code');
       var data = atob(code).split('?=?');
       var {
-        isConfirmed
+        value
       } = await Alert.fire({
-        title: 'Anda yakin ingin memblokir user ' + data[1] + ' ini?',
-        icon: 'warning',
-        text: $(this).data('message')
+        input: 'number',
+        icon: 'question',
+        titleText: "Beli " + data[1] + " berapa bro?",
       });
-      if (isConfirmed) {
+      if (value) {
         $.ajax({
-          url: "<?= baseURL('api.php?func=blokirUser'); ?>",
-          type: "POST",
+          url: '<?= baseURL('api.php?func=beli') ?>',
+          type: 'POST',
           data: {
             code: code,
-            blokir: true,
+            value: value
           },
           success: async (rest) => {
             rest = $.parseJSON(rest);
@@ -127,7 +128,7 @@
               });
             }
           },
-          error: async (err) => {
+          error: function(err) {
             Toast.fire({
               icon: 'error',
               title: err,
@@ -137,8 +138,8 @@
         });
       }
     });
-    $('.active-user').click(async () => {
-      var code = $('.active-user').data('code');
+    $('.modify-user').click(async () => {
+      var code = $('.modify-user').data('code');
       var data = atob(code).split('?=?');
       var {
         isConfirmed
@@ -149,15 +150,15 @@
       });
       if (isConfirmed) {
         $.ajax({
-          url: "<?= baseURL('api.php?func=activeUser'); ?>",
+          url: "<?= baseURL('api.php?func=modifyUser'); ?>",
           type: "POST",
           data: {
             code: code,
-            active: true,
+            status: true,
           },
           success: async (rest) => {
             rest = $.parseJSON(rest);
-            console.log(rest);
+            // console.log(rest);
             if (rest[0]) {
               await Toast.fire({
                 icon: 'success',
